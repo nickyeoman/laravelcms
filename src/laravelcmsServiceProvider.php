@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace NickYeoman\laravelcms\Providers;
+namespace NickYeoman\laravelcms;
 
 use Illuminate\Support\ServiceProvider;
 
-class cmsServiceProvider extends ServiceProvider {
+class laravelcmsServiceProvider extends ServiceProvider {
 
     public function register() {
         // nothing here yet

@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Nickyeoman\\Laravelcms\\": "src/"
+            "NickYeoman\\laravelcms\\": "src/"
         }
     },
     "authors": [
@@ -18,7 +18,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "NickYeoman\\laravelcms\\Providers"
+                "NickYeoman\\laravelcms\\laravelcmsServiceProvider"
             ]
         }
     }
