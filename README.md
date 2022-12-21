@@ -1,4 +1,21 @@
 # Nix Laravel CMS
 
-* https://laravel.com/docs/9.x/packages
-* https://adevait.com/laravel/how-to-create-a-custom-package-for-laravel
+A Laravel package created by Nick Yeoman
+
+## Gotchas
+
+You can't have another package named 'cms'.
+
+## Tree
+```
+── composer.json
+├── README.md
+└── src
+    ├── config
+    │   └── cms.php
+    ├── Controllers
+    │   └── AdminController.php
+    ├── laravelcmsServiceProvider.php
+    └── routes
+        └── web.php
+```

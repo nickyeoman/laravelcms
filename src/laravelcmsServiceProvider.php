@@ -14,13 +14,11 @@ class laravelcmsServiceProvider extends ServiceProvider {
 
     }
 
-    public function boot(): void
+    public function boot(): void 
     {
 
         // Configuration
-        $this->publishes([
-            __DIR__.'/config/cms.php' => config_path('cms.php'),
-        ]);
+        $this->publishes([__DIR__.'/config/cms.php' => config_path('cms.php'),]);
 
         // Routes
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
