@@ -2,17 +2,23 @@
 <html class="no-js" lang="en">
 
 <head>
-  <link rel="stylesheet" href="css/app.css" />
+  @include('head')
 </head>
 
 <body>
 
-  
-  <!-- Main Content Of The Page -->
+  <header> 
+      @include('nav')
+  </header>
+
   <div id="page">
-    @yield('content')
+    <aside id="beforeContent">@yeild('beforecontent')</aside>
+    <article>@yeild('content')</article>
+    <aside id="afterContent">@yeild('aftercontent')</aside>
   </div>
 
-  
+  <footer>
+    @include(footer')
+  </footer>
 
 </body></html>
