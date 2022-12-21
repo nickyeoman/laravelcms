@@ -1,0 +1,28 @@
+{
+    "name": "nickyeoman/laravelcms",
+    "description": "Nix cms in laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nickyeoman\\Laravelcms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nick Yeoman",
+            "email": "c@nickyeoman.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/support": "10.x-dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NickYeoman\\laravelcms\\ServiceProvider"
+            ]
+        }
+    },
+}
