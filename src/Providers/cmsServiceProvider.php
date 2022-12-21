@@ -1,18 +1,20 @@
 <?php
 declare(strict_types=1);
 
-namespace NickYeoman\DataObjects\Providers;
+namespace NickYeoman\laravelcms\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-final class cmsServiceProvider extends ServiceProvider
+class cmsServiceProvider extends ServiceProvider {
 
-{
+    public function register() {
+        // nothing here yet
+    }
 
     public function boot(): void
-
     {
 
+        die("got to nix package boot");
         // Configuration
         $this->publishes([
             __DIR__.'/../config/cms.php' => config_path('cms.php'),
