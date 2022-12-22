@@ -11,7 +11,7 @@ class AdminController extends Controller
     // Entry Page
     public function index(){
 
-        return view('cms::admin');
+        return view('cms::admin', ['title' => 'Admin Dashboard']);
         
     }
 

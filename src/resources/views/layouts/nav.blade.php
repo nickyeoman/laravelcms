@@ -6,7 +6,9 @@
     <ul>
 
       <li><a href="/">Home</a></li>
-      <li><a href="/user/index">Login/Register</a></li>
+      <li><a href="/admin">Admin Dashboard</a></li>
+      <li><a href="/signup">Sign Up</a></li>
+      <li><a href="/login">Login</a></li>
 
     </ul>
 

@@ -2,23 +2,23 @@
 <html class="no-js" lang="en">
 
 <head>
-  @include('head')
+  @include('cms::layouts.head' )
 </head>
 
 <body>
 
   <header> 
-      @include('nav')
+      @include('cms::layouts.nav')
   </header>
 
   <div id="page">
-    <aside id="beforeContent">@yeild('beforecontent')</aside>
-    <article>@yeild('content')</article>
-    <aside id="afterContent">@yeild('aftercontent')</aside>
+    <aside id="beforeContent">@yield('beforecontent')</aside>
+    <article>@yield('content')</article>
+    <aside id="afterContent">@yield('aftercontent')</aside>
   </div>
 
   <footer>
-    @include(footer')
+    @include('cms::layouts.footer')
   </footer>
 
 </body></html>
