@@ -1,35 +1,58 @@
 <?php
 
-Route::get('/admin', 
-    'NickYeoman\laravelcms\Controllers\AdminController@index'
-)->name('cms_admin')->middleware('auth');
+Route::group(['middleware' => ['web']], function () {
 
+    // Registration Form
+    Route::get('/signup', 
+        'NickYeoman\laravelcms\Controllers\RegisterController@form'
+        )->name('cms_register')
+        ->middleware('guest')
+    ;
 
-/***************************************************************************************
- * User Authentication
- *************************************************************************************/
+    Route::post('/signup', 
+        'NickYeoman\laravelcms\Controllers\RegisterController@save'
+    );
 
-// Start Registration
-// TODO: redirect if loggedin 
-// TODO: error messages on fail
-Route::get('/signup', 
-    'NickYeoman\laravelcms\Controllers\RegisterController@form'
-)->name('cms_register');
+    //redirects
+    Route::get('/register', function() {return to_route('cms_register');});
+    Route::get('/registration', function() {return to_route('cms_register');});
 
-Route::post('/signup', 
-    'NickYeoman\laravelcms\Controllers\RegisterController@save'
-);
+    // Login
+    Route::get('/login', 
+        'NickYeoman\laravelcms\Controllers\LoginController@form'
+        )->name('login')
+        ->middleware('guest')
+    ;
 
-// Login
-Route::get('/login', 
-    'NickYeoman\laravelcms\Controllers\LoginController@form'
-)->name('login');
+    Route::post('/login', 
+        'NickYeoman\laravelcms\Controllers\LoginController@login'
+    );
 
-Route::post('/login', 
-    'NickYeoman\laravelcms\Controllers\LoginController@login'
-);
+    // Forgot
+    Route::get('/forgot', 
+        'NickYeoman\laravelcms\Controllers\ForgotController@form'
+        )->name('cms_forgot')
+        ->middleware('guest')
+    ;
+    Route::post('/forgot', 
+        'NickYeoman\laravelcms\Controllers\ForgotController@reset'
+    );
 
-// Logout
-Route::get('/logout', 
-    'NickYeoman\laravelcms\Controllers\LoginController@logout'
-)->name('cms_logout');
+    // Reset the password from the link
+    Route::get('/reset/{token}', 
+        'NickYeoman\laravelcms\Controllers\ForgotController@resetform'
+        )->name('password.reset') // needs to be this for laravel's default
+        ->middleware('guest')
+    ;
+    Route::post('/reset-password',
+        'NickYeoman\laravelcms\Controllers\ForgotController@changePassword'
+    );
+
+    // Logout
+    Route::get('/logout', 
+        'NickYeoman\laravelcms\Controllers\LoginController@logout'
+        )->name('cms_logout')
+    ;
+
+});
+// End laravelcms Routes web.php
