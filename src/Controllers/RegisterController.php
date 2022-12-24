@@ -5,6 +5,7 @@ namespace NickYeoman\laravelcms\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -43,7 +44,8 @@ class RegisterController extends Controller
         $user = \App\Models\User::create($validData);
 
         // TODO: Send Validate Email Address
-
+        event(new Registered($user));
+        
         // Send home
         return redirect()->to('/')->with('success','Your account has been created, check your inbox for a validation link.');
     }
