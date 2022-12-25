@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 
 class RegisterController extends Controller
 {
@@ -14,6 +15,36 @@ class RegisterController extends Controller
     public function form(){
 
         return view('cms::registration', ['title' => 'Registration Form']);
+        
+    }
+
+    // Registration success
+    public function success(){
+
+        return view('cms::registration-success', ['title' => 'Registration Successful']);
+        
+    }
+
+    // https://stackoverflow.com/questions/53885431/how-to-verify-email-without-asking-the-user-to-login-to-laravel
+    // use Illuminate\Auth\Events\Verified;
+    public function verify(Request $request)
+    {
+        $user = \App\Models\User::find($request->route('id'));
+
+        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            throw new AuthorizationException;
+        }
+
+        if ($user->markEmailAsVerified())
+            event(new Verified($user));
+
+        return redirect('/verified');
+    }
+
+    // Emain verified
+    public function verified(){
+
+        return view('cms::verified', ['title' => 'Email Validation Successful']);
         
     }
 
@@ -43,11 +74,11 @@ class RegisterController extends Controller
         // Save the user
         $user = \App\Models\User::create($validData);
 
-        // TODO: Send Validate Email Address
+        // TODO: implement laravel queuing to send email
         event(new Registered($user));
         
         // Send home
-        return redirect()->to('/')->with('success','Your account has been created, check your inbox for a validation link.');
+        return redirect()->to('/registration-success')->withSuccess('Your account has been created, check your inbox for a validation link.');
     }
     
 }

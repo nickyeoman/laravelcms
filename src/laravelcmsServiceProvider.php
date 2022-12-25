@@ -24,7 +24,6 @@ class laravelcmsServiceProvider extends ServiceProvider {
 
         // Routes
         $this->loadRoutesFrom(__DIR__.'/routes/web.php');
-        $this->loadRoutesFrom(__DIR__.'/routes/password.php');
         $this->loadRoutesFrom(__DIR__.'/routes/admin.php');
 
         // Migrations

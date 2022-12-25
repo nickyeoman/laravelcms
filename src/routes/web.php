@@ -8,6 +8,10 @@ Route::group(['middleware' => ['web']], function () {
         )->name('cms_register')
         ->middleware('guest')
     ;
+    // Registration Form
+    Route::get('/registration-success', 
+        'NickYeoman\laravelcms\Controllers\RegisterController@success'
+    )->name('verification.notice');
 
     Route::post('/signup', 
         'NickYeoman\laravelcms\Controllers\RegisterController@save'
@@ -16,6 +20,18 @@ Route::group(['middleware' => ['web']], function () {
     //redirects
     Route::get('/register', function() {return to_route('cms_register');});
     Route::get('/registration', function() {return to_route('cms_register');});
+
+    // Email Verify
+    Route::get(
+        '/email/verify/{id}/{hash}', 
+        'NickYeoman\laravelcms\Controllers\RegisterController@verify'
+        )->name('verification.verify')
+    ;
+
+    // Email is verified
+    Route::get('/verified', 
+        'NickYeoman\laravelcms\Controllers\RegisterController@verified'
+    );
 
     // Login
     Route::get('/login', 

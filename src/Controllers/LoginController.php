@@ -4,6 +4,7 @@ namespace NickYeoman\laravelcms\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -21,33 +22,48 @@ class LoginController extends Controller
     // Check Login form (POST)
     public function login(Request $request) {
 
+        // TODO: throttle logings (see rate limiting)
+
         $credentials = $request->validate([
 
-            'email' => 'required|email|exists:users,email',
+            'email' => [
+                'required',
+                'email',
+                'exists:users,email'
+            ],
             'password' => 'required',
 
         ]);
 
-        // TODO: Check for either username or email
-
+        // Try to login, if not fail, else proceed
         if( ! Auth::attempt($credentials ) ) {
-
+            
             return back()
-                ->withErrors('You have entered invalid credentials')
+                ->withErrors('You have entered invalid credentials.')
+                ->onlyInput('email');
+
+        }
+        
+        // Check the the user is verified
+        // TODO: do a resend notification email
+        
+        if( ! Auth::user()->hasVerifiedEmail() ) {
+
+            Auth::logout();
+            
+            return back()
+                ->withErrors('Your Email is not yet verified.')
                 ->onlyInput('email');
 
         }
 
-        $user = Auth::getProvider()->retrieveByCredentials($credentials);
-        Auth::login($user);
-
-        // Fixation
+        // Session Fixation
         $request->session()->regenerate();
 
         // Continue on your way
         return redirect()
             ->intended('/admin')
-            ->with('sucess', 'You are now signed');
+            ->withSuccess('Success, you have logged in.');
 
     }
 
@@ -59,7 +75,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success','You have been loggedout.');
+        return redirect('/')->withSuccess('Sucess, logged out.');
 
     }
     
